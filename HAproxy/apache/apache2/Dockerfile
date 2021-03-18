@@ -1,5 +1,6 @@
-FROM httpd:2.4
+FROM php:7.3.0-apache
 
-COPY index.html /usr/loCal/apache2/htdocs/index.html
+COPY index.php /var/www/html
+
 
 

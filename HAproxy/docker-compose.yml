@@ -9,6 +9,8 @@ services:
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
+        environment:
+            - APACHE_1_IP=${APACHE_1_IP}
         networks:
             public_net:
                 ipv4_address: ${APACHE_1_IP}
@@ -19,9 +21,39 @@ services:
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
+        environment:
+            - APACHE_2_IP=${APACHE_2_IP}
         networks:
             public_net:
                 ipv4_address: ${APACHE_2_IP}
+
+    apache_img_3:
+        container_name: ${COMPOSE_PROJECT_NAME}_apache_con_3
+
+        build:
+          context: apache/apache3
+          dockerfile: Dockerfile
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        environment:
+            - APACHE_3_IP=${APACHE_3_IP}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_3_IP}
+    apache_img_4:
+        container_name: ${COMPOSE_PROJECT_NAME}_apache_con_4
+
+        build:
+          context: apache/apache4
+          dockerfile: Dockerfile
+        expose:
+            - ${APACHE_EXPOSED_PORT}
+        environment:
+            - APACHE_4_IP=${APACHE_4_IP}
+        networks:
+            public_net:
+                ipv4_address: ${APACHE_4_IP}
+
     haproxy_img:
         build: 
           context: haproxy/
@@ -36,6 +68,8 @@ services:
         environment:
             - APACHE_1_IP=${APACHE_1_IP}
             - APACHE_2_IP=${APACHE_2_IP}
+            - APACHE_3_IP=${APACHE_3_IP}
+            - APACHE_4_IP=${APACHE_4_IP}
             - APACHE_EXPOSED_PORT=${APACHE_EXPOSED_PORT}
 networks:
     public_net:
