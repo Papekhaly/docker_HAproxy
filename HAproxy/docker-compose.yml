@@ -5,24 +5,38 @@ services:
         container_name: ${COMPOSE_PROJECT_NAME}_apache_con_1
         
         build: 
-          context: apache/apache1
+          context: apache
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
         environment:
-            - APACHE_1_IP=${APACHE_1_IP}
+            - APACHE_IP=${APACHE_1_IP}
+        volumes:
+            - type: volume
+              source: web
+              target: /src
+            - type: bind
+              source: ./apache/src
+              target: /var/www/html
         networks:
             public_net:
                 ipv4_address: ${APACHE_1_IP}
     apache_img_2:
         container_name: ${COMPOSE_PROJECT_NAME}_apache_con_2
         build: 
-          context: apache/apache2
+          context: apache
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
         environment:
-            - APACHE_2_IP=${APACHE_2_IP}
+            - APACHE_IP=${APACHE_2_IP}
+        volumes:
+            - type: volume
+              source: web
+              target: /src
+            - type: bind
+              source: ./apache/src
+              target: /var/www/html
         networks:
             public_net:
                 ipv4_address: ${APACHE_2_IP}
@@ -31,12 +45,19 @@ services:
         container_name: ${COMPOSE_PROJECT_NAME}_apache_con_3
 
         build:
-          context: apache/apache3
+          context: apache
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
         environment:
-            - APACHE_3_IP=${APACHE_3_IP}
+            - APACHE_IP=${APACHE_3_IP}
+        volumes:
+            - type: volume
+              source: web
+              target: /src
+            - type: bind
+              source: ./apache/src
+              target: /var/www/html
         networks:
             public_net:
                 ipv4_address: ${APACHE_3_IP}
@@ -44,12 +65,19 @@ services:
         container_name: ${COMPOSE_PROJECT_NAME}_apache_con_4
 
         build:
-          context: apache/apache4
+          context: apache
           dockerfile: Dockerfile
         expose:
             - ${APACHE_EXPOSED_PORT}
         environment:
-            - APACHE_4_IP=${APACHE_4_IP}
+            - APACHE_IP=${APACHE_4_IP}
+        volumes:
+            - type: volume
+              source: web
+              target: /src
+            - type: bind
+              source: ./apache/src
+              target: /var/www/html
         networks:
             public_net:
                 ipv4_address: ${APACHE_4_IP}
@@ -78,3 +106,6 @@ networks:
             driver: default
             config:
                 - subnet: ${NETWORK_SUBNET}
+
+volumes:
+  web:
